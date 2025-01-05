@@ -6,6 +6,7 @@ const PORT = 8080
 import connectToDatabase from "./db/db.js"
 
 import authRouter from "./routes/auth.js"
+import { login, register, updateUser } from "./controllers/authController.js"
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
