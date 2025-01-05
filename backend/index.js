@@ -5,8 +5,7 @@ const PORT = 8080
 
 import connectToDatabase from "./db/db.js"
 
-import authRouter from "./routes/auth.js"
-import { login, register, updateUser } from "./controllers/authController.js"
+import authRouter from "./routes/index.js"
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
@@ -19,11 +18,7 @@ app.get('/', (req,res)=>{
     })
 })
 
-app.post('/login', login)
-app.post('/register', register)
-app.post('/updateUser', updateUser)
-
-app.use("/api/auth", authRouter)
+app.use("/api/", authRouter)
 
 app.listen(PORT, ()=>{
     console.log(`Successfully Listening on ${PORT}`)
