@@ -18,6 +18,10 @@ app.get('/', (req,res)=>{
     })
 })
 
+app.post('/login', login)
+app.post('/register', register)
+app.post('/updateUser', updateUser)
+
 app.use("/api/auth", authRouter)
 
 app.listen(PORT, ()=>{
