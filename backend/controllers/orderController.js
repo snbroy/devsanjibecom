@@ -31,4 +31,24 @@ const createOrder = (async (req, res) => {
     }
 })
 
-export { createOrder }
+const getOrderByEmail = (async (req, res) => {
+    try {
+        // console.log(req)
+        const email = req.query.email
+        console.log(email)
+        const orders = await Order
+            .find({ email: email })
+            .sort({ createdAt: -1 })
+        if (orders) {
+            res.status(200).json({sucess: true, data: orders})
+        } else {
+            res.status(404).json({sucess: false, error: 'No orders found'})
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({sucess: false, error: error.message})
+    }
+
+})
+
+export { createOrder, getOrderByEmail }
