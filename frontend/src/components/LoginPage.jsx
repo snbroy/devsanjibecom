@@ -16,7 +16,7 @@ const LoginPage = () => {
         if (email === '' || password === '') {
             setError('Please fill in all fields');
         } else {
-            fetch(`${serverUrl}/login`, {
+            fetch(`${serverUrl}/api/auth/login`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

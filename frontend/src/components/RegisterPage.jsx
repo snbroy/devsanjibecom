@@ -18,7 +18,7 @@ const RegisterPage = () => {
             // Handle successful registration
             console.log('Registering with:', { email, password, name });
             // Reset fields
-            fetch(`${serverUrl}/register`, {
+            fetch(`${serverUrl}/api/auth/register`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

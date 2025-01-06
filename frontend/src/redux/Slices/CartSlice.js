@@ -22,7 +22,8 @@ export const CartSlice = createSlice({
             })
         },
         clearCart: (state) => {
-            state = [];
+            const emptyState = [];
+            state.push(emptyState)
         },
     }
 })

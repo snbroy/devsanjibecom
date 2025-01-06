@@ -13,6 +13,8 @@ const Checkout = () => {
     const context = useContext(CreateContextApi);
     const { setPaymentId } = context;
     const dispatch = useDispatch();
+    const [orderSuccess, setOrderSuccess] = useState(false)
+    const [orderId, setOrderId] = useState('')
     const [billingDetails, setBillingDetails] = useState({
         name: '',
         phone: '',
@@ -84,9 +86,10 @@ const Checkout = () => {
                     .then((responseJson) => {
                         console.log('Order Response:', responseJson);
                         if (responseJson.sucess === true) {
-                            setPaymentId(responseJson.data.orderId)
-                            navigate("/thank-you")
+                            setPaymentId(response.razorpay_payment_id)
                             toast.success(`Payment successful! Order ID: ${responseJson.data.orderId}`);
+                            setOrderSuccess(true)
+                            setOrderId(response.data.orderId)
                             dispatch(clearCart());
                         } else {
                             toast.error('An error occurred. Please try again later.');
@@ -115,6 +118,15 @@ const Checkout = () => {
         rzp.open();
     };
 
+    if (orderSuccess) {
+        return (
+            <div className="thank-you-wrapper">
+                <h1>Hi Thank You for Your Order!</h1>
+                <p>Your <b>Order Id: {orderId}</b> has been placed successfully. We appreciate your business!</p>
+                <Link to="/" className="home-link">Return to Home</Link>
+            </div>
+        );
+    }
     return (
         <div className={`checkout-wrapper`}>
             <div className='mx-container'>

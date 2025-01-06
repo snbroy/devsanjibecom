@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearCart } from '../redux/Slices/CartSlice';
 import { CreateContextApi } from '../context/MyContextApi';
@@ -9,6 +9,7 @@ const randomOrderNumber = () => {
 };
 
 const ThankYou = () => {
+  const { cart } = useSelector((state) => state);
     const dispatch = useDispatch();
     const context = useContext(CreateContextApi);
     const { setPaymentId } = context;
@@ -16,6 +17,9 @@ const ThankYou = () => {
         dispatch(clearCart)
         setPaymentId('')
     }, [dispatch]);
+
+    console.log(cart)
+
   return (
     <div className="thank-you-wrapper">
       <h1>Hi Thank You for Your Order!</h1>

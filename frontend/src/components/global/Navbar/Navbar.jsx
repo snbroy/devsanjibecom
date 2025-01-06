@@ -78,7 +78,7 @@ const Navbar = () => {
                                                 <div className="quantity">
 
                                                     <button onClick={(e) => handleDecrement(product)}>-</button>
-                                                    <input type="number" value={product.quantity} />
+                                                    <input type="text" value={product.quantity} />
                                                     <button value={'plus'} onClick={(e) => handleIncrement(product)}>+</button>
                                                     {/* <button value={'minus'} onClick={ handleDecrement(product)}>-</button>
                                                     <input type="number" value={product.quantity} />
