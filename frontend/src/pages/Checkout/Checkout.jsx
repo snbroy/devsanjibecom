@@ -1,17 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'; // Adjust the import path as needed
 import './Checkout.css';
 import { CreateContextApi } from '../../context/MyContextApi';
 import toast from 'react-hot-toast';
+import { clearCart } from '../../redux/Slices/CartSlice';
+import { serverUrl } from '../../helper/helper';
 
 const Checkout = () => {
     const navigate = useNavigate()
     const { cart } = useSelector((state) => state);
     const context = useContext(CreateContextApi);
     const { setPaymentId } = context;
+    const dispatch = useDispatch();
     const [billingDetails, setBillingDetails] = useState({
         name: '',
+        phone: '',
         email: '',
         address: '',
         city: '',
@@ -47,37 +51,57 @@ const Checkout = () => {
             description: 'Test Transaction',
             image: '/logos/logo.png', // Replace with your logo URL
             handler: function (response) {
-                // const orderData = {
-                //     'fields': {
-                //         "payment_id": response.razorpay_payment_id,
-                //         "name": billingDetails.name,
-                //         "email": billingDetails.email,
-                //         "address": billingDetails.address,
-                //         "city": billingDetails.city,
-                //         "state": billingDetails.state,
-                //         "products": cart,
-                //     }
-                // }
-                // fetch('http://localhost:3200/create-order', {
-                //     method: 'post',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: orderData
-                // }).then((response) => response.json())
-                // .then((responseJson) => {
-                //   console.log(responseJson)
-                // })
-                // .catch((error) => {
-                //   console.error(error);
-                // });
-                setPaymentId(response)
-                navigate("/thank-you")
-                toast.success(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+                const orderObject = {
+                    email: billingDetails.email,
+                    orderItems: cart,
+                    shippingAddress: {
+                        address: billingDetails.address,
+                        city: billingDetails.city,
+                        state: billingDetails.state,
+                        zip: billingDetails.zip,
+                        country: billingDetails.country,
+                        phone: billingDetails.phone,
+                    },
+                    totalPrice: totalPrice,
+                    paymentResult: {
+                        id: response.razorpay_payment_id,
+                    },
+                    customerDetails: {
+                        name: billingDetails.name,
+                        phone: billingDetails.phone,
+                    }
+                }
+
+                fetch(`${serverUrl}/api/orders/create-order`, {
+                    method: 'post',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                    body: JSON.stringify(orderObject)
+                }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log('Order Response:', responseJson);
+                        if (responseJson.sucess === true) {
+                            setPaymentId(responseJson.data.orderId)
+                            navigate("/thank-you")
+                            toast.success(`Payment successful! Order ID: ${responseJson.data.orderId}`);
+                            dispatch(clearCart());
+                        } else {
+                            toast.error('An error occurred. Please try again later.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+                console.log('Order Object:', orderObject);
 
             },
             prefill: {
                 name: billingDetails.name,
                 email: billingDetails.email,
-                contact: '8918132291',
+                contact: billingDetails.phone,
             },
             notes: {
                 address: 'Razorpay Corporate Office',
@@ -176,6 +200,18 @@ const Checkout = () => {
                                         id="country"
                                         name="country"
                                         value={billingDetails.country}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="country">Phone</label>
+                                    <input
+                                        type="number"
+                                        id="phone"
+                                        name="phone"
+                                        value={billingDetails.phone}
                                         onChange={handleInputChange}
                                         required
                                     />

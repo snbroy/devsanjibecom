@@ -85,7 +85,6 @@
 }
 
 .categories-wrapper .category-item {
-  /* padding: 10px 20px; */
   background-color: #f1f1f1;
   border-radius: 5px;
   cursor: pointer;
@@ -253,9 +252,7 @@
   height: 100%;
 }
 
-.mini-cart-container {
-  /* position: relative; */
-}
+
 
 .mini-cart-container .mini-cart-footer {
   position: absolute;
@@ -851,7 +848,7 @@ input {
   border-radius: 8px;
   max-height: 200px;
 }
-anjib Roy/Desktop/Learning/new ecom app/reactappsrc/frontend/src/components/LoginPage.css
+
 .login-container {
     max-width: 400px;
     margin: 0 auto;
@@ -1020,6 +1017,20 @@ h2 {
   bottom: 6px;
   width: 15px;
   height: 15px;
+}
+
+.auth-form{
+  max-width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 0 auto;
+  padding: 70px 20px;
+}
+.auth-form div{
+  margin: 10px 0;
+}
+.auth-form button{
+  margin-top: 20px;
+  width: 100%;
 }
 
 @media (max-width: 869px) {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { CreateContextApi } from '../context/MyContextApi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { serverUrl } from '../helper/helper';
 
 const LoginPage = () => {
@@ -10,21 +10,18 @@ const LoginPage = () => {
     const context = useContext(CreateContextApi);
     const { user, setUser} = context;
     const navigate = useNavigate();
-    console.log(process.env);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your login logic here
         if (email === '' || password === '') {
             setError('Please fill in all fields');
         } else {
-            // Handle successful login
-            console.log('Logging in with:', { email, password });
-
-            fetch(`${serverUrl}/api/auth/login`, {
+            fetch(`${serverUrl}/login`, {
                 method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                 },
                 body: JSON.stringify({ email, password }),
             })
@@ -39,7 +36,6 @@ const LoginPage = () => {
                         setError('');
                         setUser(data);
                         navigate('/account');
-                        // Redirect to account page
                         
                     }
                 })
@@ -48,7 +44,6 @@ const LoginPage = () => {
                     setError('An error occurred. Please try again later.');
             })
 
-            // Reset fields
             setEmail('');
             setPassword('');
             setError('');
@@ -59,7 +54,7 @@ const LoginPage = () => {
         <div className="login-page mx-container">
             <h2>Login</h2>
             {error && <p className="error">{error}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='auth-form'>
                 <div>
                     <label htmlFor="username">Email:</label>
                     <input
@@ -79,6 +74,9 @@ const LoginPage = () => {
                     />
                 </div>
                 <button type="submit">Login</button>
+                <div>
+                    <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+                </div>
             </form>
         </div>
     );

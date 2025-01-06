@@ -113,7 +113,7 @@ const Navbar = () => {
                     <ul className="ul-head px-0 flex content-center">
                         <li className="list-style-none">
                             {useCheckMobileScreen() && (
-                                <MobileNav data={NavData} />
+                                <MobileNav data={NavData} user={user} />
                             )}
 
                             <Link to="/"><img src="/logos/logo_transparent.png" className="brand-logo" alt="logo" /></Link>

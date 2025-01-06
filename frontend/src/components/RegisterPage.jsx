@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { serverUrl } from '../helper/helper';
+import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
     const [email, setEmail] = useState('');
@@ -17,10 +18,12 @@ const RegisterPage = () => {
             // Handle successful registration
             console.log('Registering with:', { email, password, name });
             // Reset fields
-            fetch(`${serverUrl}/api/auth/register`, {
+            fetch(`${serverUrl}/register`, {
                 method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                 },
                 body: JSON.stringify({ name, email, password }),
             })
@@ -53,7 +56,7 @@ const RegisterPage = () => {
             <h2>Register</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {userCreated && <p style={{ color: 'green' }}>User created successfully!</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='auth-form'>
                 <div>
                     <label>Name:</label>
                     <input
@@ -80,6 +83,9 @@ const RegisterPage = () => {
                 </div>
                 
                 <button type="submit">Register</button>
+                <div>
+                    <p>Already have an account? <Link to='/login'>Login</Link></p>
+                </div>
             </form>
         </div>
     );

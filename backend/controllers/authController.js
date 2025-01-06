@@ -43,6 +43,8 @@ const register = async(req, res) =>{
         const newUser = new User({
             name,
             email,
+            customerId: Math.floor(100000 + Math.random(), 900000),
+            accountStatus: "active",
             password: hashpassword,
             role: 'user'
         })

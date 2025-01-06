@@ -5,7 +5,7 @@ import { CreateContextApi } from '../context/MyContextApi'
 import { useSelector } from 'react-redux'
 
 
-const MobileNav = ({ data }) => {
+const MobileNav = ({ data, user }) => {
     const context = useContext(CreateContextApi);
     const { mobileNavOpen, setMobileNavOpen } = context;
     const toggleDrawer = () => {
@@ -36,6 +36,15 @@ const MobileNav = ({ data }) => {
                             <li key={item.id} className="list-style-none"><Link to={item.url}>{item.title}</Link></li>
                         )
                     })}
+                    {user ? (
+                        <li className="list-style-none"><Link to="/account">Account</Link></li>
+                    ) : (
+                        <>
+                            <li className="list-style-none"><Link to="/login">Login</Link></li>
+                            <li className="list-style-none"><Link to="/signup">Sign Up</Link></li>
+                        </>
+
+                    )}
                 </ul>
 
             </Drawer>
