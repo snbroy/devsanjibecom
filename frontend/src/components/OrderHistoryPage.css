@@ -1,0 +1,53 @@
+// filepath: /C:/Users/Sanjib Roy/Desktop/Learning/new ecom app/reactappsrc/frontend/src/components/OrderHistoryPage.css
+.order-history-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.order {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.order h3 {
+    margin-top: 0;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.order-items-table th, .order-items-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.order-items-table th {
+    background-color: #f2f2f2;
+}
+
+.order-items-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
