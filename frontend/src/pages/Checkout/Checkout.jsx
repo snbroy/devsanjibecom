@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'; // Adjust the import path 
 import './Checkout.css';
 import { CreateContextApi } from '../../context/MyContextApi';
 import toast from 'react-hot-toast';
-import { clearCart } from '../../redux/Slices/CartSlice';
+import { clearCart, update } from '../../redux/Slices/CartSlice';
 import { serverUrl } from '../../helper/helper';
 
 const Checkout = () => {
@@ -89,8 +89,10 @@ const Checkout = () => {
                             setPaymentId(response.razorpay_payment_id)
                             toast.success(`Payment successful! Order ID: ${responseJson.data.orderId}`);
                             setOrderSuccess(true)
+                            console.log(response.data)
                             setOrderId(response.data.orderId)
-                            dispatch(clearCart());
+                            localStorage.removeItem("cart")
+                        
                         } else {
                             toast.error('An error occurred. Please try again later.');
                         }

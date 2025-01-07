@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 export const CreateContextApi = createContext();
 export const ContextProvider = ({ children }) => {
+    const { cart } = useSelector((state) => state);
     const [products, setProducts] = useState([]);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -33,6 +35,9 @@ export const ContextProvider = ({ children }) => {
       }
       setLoading(false);
     }
+    useEffect(()=>{
+      localStorage.setItem("cart", JSON.stringify(cart))
+    },[cart])
     useEffect(() => {
       fetchProductData();
     }, []);
