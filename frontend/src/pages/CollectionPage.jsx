@@ -7,8 +7,10 @@ import Spinner from "../components/Spinner";
 const CollectionPage = () => {
     const context = useContext(CreateContextApi);
     const { products, loading } = context;
-    const { id } = useParams();
-    const collectionProducts = products.filter((product) => product.category.toLowerCase().replace(" ", "").replace("'", "") === id);
+    let { id } = useParams();
+    id = decodeURIComponent(id);
+    console.log(id.replaceAll(' ', '-'), "id")
+    const collectionProducts = products.filter((product) => product.category.name.replaceAll(' ', '-') === id.replaceAll(' ', '-'));
     if (loading) { 
         return <Spinner />
     }

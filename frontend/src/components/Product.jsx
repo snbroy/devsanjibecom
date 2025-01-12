@@ -23,7 +23,7 @@ const Product = ({ post }) => {
       <div className="product-details">
         <Link to={`/product/${post.id}`} className="full-link">&nbsp;</Link>
         <div className="">
-          <img src={post.image} alt="" className="product-img" />
+          <img src={post?.images[0]?.replaceAll("[","").replaceAll("]","").replace(/['"]+/g, '')} alt="" className="product-img" />
         </div>
         <div className="p-title">
           <p className="">{post?.title}</p>

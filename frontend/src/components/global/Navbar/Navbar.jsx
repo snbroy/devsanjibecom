@@ -69,9 +69,10 @@ const Navbar = () => {
                             <ul>
                                 <p className="cart-count">You have {totalQuantity} items in your cart</p>
                                 {cart.map((product) => {
+                                    console.log(product, "cart")
                                     return (
                                         <li key={product.id}>
-                                            <div className="p-img"><img src={product.image} alt={product.title} /></div>
+                                            <div className="p-img"><img src={product.images?product.images[0]:product.image} alt={product.title} /></div>
                                             <div className="p-details">
 
                                                 <h4>{product.title}</h4>
